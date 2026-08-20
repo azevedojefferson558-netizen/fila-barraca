@@ -52,26 +52,22 @@ export default function Painel() {
 
 
 
-  async function carregarPedidos() {
+ async function carregarPedidos() {
+  const { data, error } = await supabase
+    .from("pedidos")
+    .select("*")
+    .order("numero", { ascending: false })
 
-    const { data, error } = await supabase
-      .from("pedidos")
-      .select("*")
-      .order("numero", {
-        ascending: true,
-      })
-
-
-    if (error) {
-      console.error(error)
-      return
-    }
-
-
-    setPedidos((data as Pedido[]) || [])
-    setCarregando(false)
-
+  if (error) {
+    console.error(error)
+    return
   }
+
+  const lista = (data as Pedido[]) || []
+
+  setPedidos(lista)
+  setCarregando(false)
+}
 
 
 

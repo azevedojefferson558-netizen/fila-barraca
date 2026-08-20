@@ -1,3 +1,4 @@
+```tsx
 "use client"
 
 import { useState } from "react"
@@ -14,6 +15,7 @@ export default function PedidoPage() {
 
   const [xBurger, setXBurger] = useState(0)
   const [cocaCola, setCocaCola] = useState(0)
+
   const [criando, setCriando] = useState(false)
   const [erro, setErro] = useState("")
 
@@ -67,7 +69,7 @@ export default function PedidoPage() {
           itens,
           status: "aguardando",
         })
-        .select("numero")
+        .select("numero, codigo")
         .single()
 
       if (error) {
@@ -77,7 +79,14 @@ export default function PedidoPage() {
         return
       }
 
-      router.push(`/pedido/${data.numero}`)
+      if (!data?.codigo) {
+        console.error("Pedido criado sem código:", data)
+        setErro("O pedido foi criado, mas não recebeu um código.")
+        setCriando(false)
+        return
+      }
+
+      router.push(`/pedido/${data.codigo}`)
     } catch (error) {
       console.error(error)
       setErro("Ocorreu um erro ao criar o pedido.")
@@ -111,7 +120,6 @@ export default function PedidoPage() {
 
           {/* X-BURGUER */}
           <div className="mt-6 rounded-2xl border border-gray-200 p-4">
-
             <div className="flex items-center justify-between">
 
               <div>
@@ -153,12 +161,10 @@ export default function PedidoPage() {
               </div>
 
             </div>
-
           </div>
 
           {/* COCA-COLA */}
           <div className="mt-4 rounded-2xl border border-gray-200 p-4">
-
             <div className="flex items-center justify-between">
 
               <div>
@@ -200,15 +206,16 @@ export default function PedidoPage() {
               </div>
 
             </div>
-
           </div>
 
+          {/* ERRO */}
           {erro && (
             <div className="mt-5 rounded-xl bg-red-50 p-4 text-center text-sm font-semibold text-red-600">
               {erro}
             </div>
           )}
 
+          {/* CRIAR PEDIDO */}
           <button
             type="button"
             onClick={criarPedido}
@@ -219,8 +226,8 @@ export default function PedidoPage() {
           </button>
 
         </div>
-
       </div>
     </main>
   )
 }
+```

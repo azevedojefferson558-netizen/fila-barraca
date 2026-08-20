@@ -56,6 +56,7 @@ export default function Painel() {
   const { data, error } = await supabase
     .from("pedidos")
     .select("*")
+    .order("status", { ascending: true })
     .order("numero", { ascending: false })
 
   if (error) {
@@ -63,12 +64,9 @@ export default function Painel() {
     return
   }
 
-  const lista = (data as Pedido[]) || []
-
-  setPedidos(lista)
+  setPedidos((data as Pedido[]) || [])
   setCarregando(false)
 }
-
 
 
   async function marcarComoPronto(id:number) {

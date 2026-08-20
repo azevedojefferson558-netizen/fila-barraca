@@ -1,4 +1,3 @@
-```tsx
 "use client"
 
 import { useState } from "react"
@@ -79,7 +78,7 @@ export default function PedidoPage() {
         return
       }
 
-      if (!data?.codigo) {
+      if (!data || !data.codigo) {
         console.error("Pedido criado sem código:", data)
         setErro("O pedido foi criado, mas não recebeu um código.")
         setCriando(false)
@@ -118,7 +117,6 @@ export default function PedidoPage() {
             Escolha os produtos e as quantidades.
           </p>
 
-          {/* X-BURGUER */}
           <div className="mt-6 rounded-2xl border border-gray-200 p-4">
             <div className="flex items-center justify-between">
 
@@ -163,7 +161,6 @@ export default function PedidoPage() {
             </div>
           </div>
 
-          {/* COCA-COLA */}
           <div className="mt-4 rounded-2xl border border-gray-200 p-4">
             <div className="flex items-center justify-between">
 
@@ -208,14 +205,12 @@ export default function PedidoPage() {
             </div>
           </div>
 
-          {/* ERRO */}
           {erro && (
             <div className="mt-5 rounded-xl bg-red-50 p-4 text-center text-sm font-semibold text-red-600">
               {erro}
             </div>
           )}
 
-          {/* CRIAR PEDIDO */}
           <button
             type="button"
             onClick={criarPedido}
@@ -230,4 +225,3 @@ export default function PedidoPage() {
     </main>
   )
 }
-```
